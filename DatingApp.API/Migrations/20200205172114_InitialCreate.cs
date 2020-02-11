@@ -1,29 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using DatingApp.API.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatingApp.API.Migrations
 {
-    public partial class InitialCreate : Migration
+    [DbContext(typeof(DataContext))]
+    [Migration("20200205172114_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Values",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Values", x => x.Id);
-                });
-        }
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "3.0.1");
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Values");
+            modelBuilder.Entity("DatingApp.API.Models.Value", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Values");
+                });
+#pragma warning restore 612, 618
         }
     }
 }
